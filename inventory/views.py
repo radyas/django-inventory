@@ -1,12 +1,23 @@
+from datetime import datetime
+
 import requests
 from django.shortcuts import render
 from rest_framework.viewsets import ModelViewSet
 
 from inventory.models import Inventory
+from inventory.serializers import InventorySerializer, InventoryDetailSerializer
+from inventory.utils import format_response_data
 
 
 class InventoryViewSet(ModelViewSet):
     model = Inventory
+    queryset = Inventory.objects.all()
+
+    def get_serializer_class(self):
+        if self.action == 'list':
+            return InventorySerializer
+        else:
+            return InventoryDetailSerializer
 
 
 def inventory(request):
@@ -18,7 +29,7 @@ def inventory(request):
 
     # set data if the response is successful
     if response.status_code == 200:
-        data = response.content
+        data = format_response_data(response.content)
 
     context = {
         'items': data
@@ -35,7 +46,8 @@ def inventory_detail(request, inventory_id):
 
     # set data if the response is successful
     if response.status_code == 200:
-        data = response.content
+        data = format_response_data(response.content)
+        data['added_at'] = datetime.fromisoformat(data['added_at'])
 
     context = {
         'item': data
