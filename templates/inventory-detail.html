@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load static %}
 name = models.CharField(max_length=250)
     address = models.TextField()
     phone = models.PositiveIntegerField()
@@ -22,8 +23,14 @@ class Inventory(models.Model):
 
     <div class="container">
 
-        <table class="table table-striped table-hover">
+        <table class="table table-striped table-hover align-middle">
             <tbody>
+                <tr>
+                    <th scope="col">Product Preview</th>
+                    <td>
+                        <img src="{% static 'images/default-product-image.png' %}" height="200px">
+                    </td>
+                </tr>
                 <tr>
                     <th scope="col">Name</th>
                     <td>{{ item.name }}</td>
