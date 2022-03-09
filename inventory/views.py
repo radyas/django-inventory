@@ -1,6 +1,8 @@
 from django.shortcuts import render
+from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework.viewsets import ModelViewSet
 
+from inventory.filters import InventoryFilter
 from inventory.models import Inventory
 from inventory.serializers import InventorySerializer, InventoryDetailSerializer
 from inventory.utils import get_list_data, get_detail_data
@@ -9,6 +11,8 @@ from inventory.utils import get_list_data, get_detail_data
 class InventoryViewSet(ModelViewSet):
     model = Inventory
     queryset = Inventory.objects.all()
+    filter_backends = [DjangoFilterBackend]
+    filterset_class = InventoryFilter
 
     def get_serializer_class(self):
         if self.action == 'list':
