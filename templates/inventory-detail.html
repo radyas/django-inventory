@@ -1,6 +1,73 @@
 {% extends 'base.html' %}
+name = models.CharField(max_length=250)
+    address = models.TextField()
+    phone = models.PositiveIntegerField()
+
+    def __str__(self):
+        return str(self.id) + ' - ' + self.name
+
+
+class Inventory(models.Model):
+    name = models.CharField(max_length=250)
+    description = models.TextField(null=True)
+    note = models.TextField(null=True)
+    stock = models.PositiveIntegerField()
+    availability = models.BooleanField(default=True)
+    supplier = models.ForeignKey(Supplier, related_name='added_inventory', on_delete=models.SET_NULL, null=True)
+    added_by = models.ForeignKey(User, related_name='added_inventory', on_delete=models.SET_NULL, null=True)
+    added_at = models.DateTimeField(auto_now_add=True)
+    updated_at =
 
 {% block content %}
 
+    <div class="container">
+
+        <table class="table table-striped table-hover">
+            <tbody>
+                <tr>
+                    <th scope="col">Name</th>
+                    <td>{{ item.name }}</td>
+                </tr>
+                <tr>
+                    <th scope="col">description</th>
+                    <td>{{ item.description }}</td>
+                </tr>
+                <tr>
+                    <th scope="col">Note</th>
+                    <td>{{ item.note }}</td>
+                </tr>
+                <tr>
+                    <th scope="col">Quantity</th>
+                    <td>{{ item.stock }}</td>
+                </tr>
+                <tr>
+                    <th scope="col">Supplier Name</th>
+                    <td>{{ item.supplier.name }}</td>
+                </tr>
+                <tr>
+                    <th scope="col">Supplier Address</th>
+                    <td>{{ item.supplier.address }}</td>
+                </tr>
+                <tr>
+                    <th scope="col">Supplier Phone</th>
+                    <td>{{ item.supplier.phone }}</td>
+                </tr>
+                <tr>
+                    <th scope="col">Added By</th>
+                    <td>{{ item.added_by }}</td>
+                </tr>
+                <tr>
+                    <th scope="col">Available</th>
+                    <td>{{ item.availability }}</td>
+                </tr>
+                <tr>
+                    <th scope="col">Added At</th>
+                    <td>{{ item.added_at | timesince}} ago</td>
+                </tr>
+            </tbody>
+
+        </table>
+
+    </div>
 
 {% endblock %}
