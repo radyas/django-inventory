@@ -17,6 +17,7 @@ class Inventory(models.Model):
     note = models.TextField(null=True)
     stock = models.PositiveIntegerField()
     availability = models.BooleanField(default=True)
+    supplier = models.ForeignKey(Supplier, related_name='added_inventory', on_delete=models.SET_NULL, null=True)
     added_by = models.ForeignKey(User, related_name='added_inventory', on_delete=models.SET_NULL, null=True)
     added_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
