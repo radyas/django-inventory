@@ -1,3 +1,13 @@
 from django.contrib import admin
 
-# Register your models here.
+from inventory.models import Inventory, Supplier
+
+
+@admin.register(Inventory)
+class InventoryAdmin(admin.ModelAdmin):
+    pass
+
+
+@admin.register(Supplier)
+class SupplierAdmin(admin.ModelAdmin):
+    pass
