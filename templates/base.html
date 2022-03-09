@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{% block title %}{% endblock %}</title>
+
+    {% block assets %} {% endblock %}
+</head>
+<body class="text-center" style="background: rgb(241, 247, 252)">
+    <div class="container h-100">
+        <div class="row h-100 justify-content-center" >
+            {% block content %}{% endblock %}
+        </div>
+    </div>
+
+
+
+{% block scripts %} {% endblock %}
+
+</body>
+
+</html>
